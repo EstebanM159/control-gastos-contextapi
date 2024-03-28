@@ -1,7 +1,7 @@
 import { useState, type ChangeEvent, useMemo } from 'react'
 import { useBudget } from '../hooks/useBudget'
 export default function BudgetForm () {
-  const [budget, setBudget] = useState(0)
+  const [budget, setBudget] = useState(1000) // cambiar a 0
   const { dispatch } = useBudget()
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setBudget(+e.target.value)
