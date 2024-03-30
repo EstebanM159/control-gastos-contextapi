@@ -32,12 +32,14 @@ export default function ExpenseForm () {
       [name]: isAmountField ? +value : value
     })
   }
+  // Cambio de fecha
   const handleChangeDate = (value: Value) => {
     setExpense({
       ...expense,
       date: value
     })
   }
+  // Validaciones
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (Object.values(expense).includes('')) {
@@ -87,7 +89,7 @@ export default function ExpenseForm () {
                 placeholder="Añade la cantidad del gasto"
                 className="bg-slate-100 p-2"
                 name="amount"
-                value={expense.amount}
+                value={expense.amount !== 0 ? expense.amount : ''}
                 onChange={handleChange}
             />
         </div>

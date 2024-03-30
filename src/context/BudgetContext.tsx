@@ -6,6 +6,7 @@ export type BudgetContextProps = {
   dispatch: Dispatch<BudgetActions>
   totalExpenses: number
   remainingBudget: number
+  isValidBudget: boolean
 }
 
 export const BudgetContext = createContext<BudgetContextProps>(null!)
@@ -16,6 +17,8 @@ export type BudgetProvidersProps = {
 
 export const BudgetProviders = ({ children }: BudgetProvidersProps) => {
   const [state, dispatch] = useReducer(budgetReducer, initialState)
+  const isValidBudget = useMemo(() => state.budget > 0, [state.budget])
+
   const totalExpenses = useMemo(() => state.expenses.reduce((total, expense) => expense.amount + total, 0), [state.expenses])
   const remainingBudget = state.budget - totalExpenses
   return (
@@ -24,7 +27,8 @@ export const BudgetProviders = ({ children }: BudgetProvidersProps) => {
               state,
               dispatch,
               totalExpenses,
-              remainingBudget
+              remainingBudget,
+              isValidBudget
             }
         }>
             {children}

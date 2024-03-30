@@ -4,6 +4,7 @@ import ExpenseDetail from './ExpenseDetail'
 import { categories } from '../data'
 export default function ExpenseList () {
   const { state } = useBudget()
+  // Filtra por categoria
   const filteredExpenses = state.currentCategory
     ? state.expenses.filter(expense => expense.category === state.currentCategory)
     : state.expenses

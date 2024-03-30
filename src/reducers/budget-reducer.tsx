@@ -1,7 +1,7 @@
 /* eslint-disable prefer-const */
 import { v4 as uuidv4 } from 'uuid'
 import { type Expense, type DraftExpense, type Category } from '../types'
-
+// Acciones
 export type BudgetActions =
 { type: 'add-budget', payload: { budget: number } } |
 { type: 'show-modal' } |
@@ -12,7 +12,7 @@ export type BudgetActions =
 { type: 'update-expense', payload: { expense: Expense } } |
 { type: 'reset-app' } |
 { type: 'add-filter-category', payload: { id: Category['id'] } }
-
+// Tipo del estado
 export type BudgetState = {
   budget: number
   modal: boolean
@@ -20,6 +20,7 @@ export type BudgetState = {
   editingId: Expense['id']
   currentCategory: Category['id']
 }
+// Traer del localStorage
 const localStorageExpenses = (): Expense[] => {
   const expenses = localStorage.getItem('expenses')
   return expenses ? JSON.parse(expenses) : []
@@ -28,6 +29,7 @@ const localStorageBudget = () => {
   const budget = localStorage.getItem('budget')
   return budget ? +budget : 0
 }
+// Estado inicial
 export const initialState: BudgetState = {
   budget: localStorageBudget(),
   modal: false,
@@ -35,12 +37,14 @@ export const initialState: BudgetState = {
   editingId: '',
   currentCategory: ''
 }
+// Al agragar un gasto se le agreaga una id
 const createExpense = (draftExpense: DraftExpense): Expense => {
   return {
     ...draftExpense,
     id: uuidv4()
   }
 }
+// Reducer que consume las acciones y modifica el estado inicial
 export const budgetReducer = (state: BudgetState = initialState, action: BudgetActions) => {
   const { type } = action
   if (type === 'add-budget') {
@@ -62,6 +66,7 @@ export const budgetReducer = (state: BudgetState = initialState, action: BudgetA
       editingId: ''
     }
   }
+  // Agrega un gasto
   if (type === 'add-expense') {
     const expense = createExpense(action.payload.expense)
     return {
@@ -70,12 +75,14 @@ export const budgetReducer = (state: BudgetState = initialState, action: BudgetA
       modal: false
     }
   }
+  // Remueve un gasto
   if (type === 'remove-expense') {
     return {
       ...state,
       expenses: state.expenses.filter(exp => exp.id !== action.payload.id)
     }
   }
+  // Obtiene la id  de un gasto para editarla
   if (type === 'get-expense-by-id') {
     return {
       ...state,
@@ -83,6 +90,7 @@ export const budgetReducer = (state: BudgetState = initialState, action: BudgetA
       modal: true
     }
   }
+  // Edita un gasto
   if (type === 'update-expense') {
     return {
       ...state,
@@ -98,6 +106,7 @@ export const budgetReducer = (state: BudgetState = initialState, action: BudgetA
       expenses: []
     }
   }
+  // obtiene un id para filtrar por categoria
   if (type === 'add-filter-category') {
     return {
       ...state,
