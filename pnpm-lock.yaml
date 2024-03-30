@@ -17,12 +17,18 @@ dependencies:
   react-calendar:
     specifier: ^4.8.0
     version: 4.8.0(@types/react@18.2.72)(react-dom@18.2.0)(react@18.2.0)
+  react-circular-progressbar:
+    specifier: ^2.1.0
+    version: 2.1.0(react@18.2.0)
   react-date-picker:
     specifier: ^10.6.0
     version: 10.6.0(@types/react-dom@18.2.22)(@types/react@18.2.72)(react-dom@18.2.0)(react@18.2.0)
   react-dom:
     specifier: ^18.2.0
     version: 18.2.0(react@18.2.0)
+  react-swipeable-list:
+    specifier: ^1.9.3
+    version: 1.9.3
   uuid:
     specifier: ^9.0.1
     version: 9.0.1
@@ -2797,6 +2803,14 @@ packages:
       warning: 4.0.3
     dev: false
 
+  /react-circular-progressbar@2.1.0(react@18.2.0):
+    resolution: {integrity: sha512-xp4THTrod4aLpGy68FX/k1Q3nzrfHUjUe5v6FsdwXBl3YVMwgeXYQKDrku7n/D6qsJA9CuunarAboC2xCiKs1g==}
+    peerDependencies:
+      react: ^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+    dev: false
+
   /react-date-picker@10.6.0(@types/react-dom@18.2.22)(@types/react@18.2.72)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-db5lcmU/52X8ur8SU1QU3PYBiaDG5SbzZDlqWk3YruPx5Ti9w6UpqCRsd1TXycVla9Ut2I3Qb4BUe27jxSwHeg==}
     peerDependencies:
@@ -2856,6 +2870,10 @@ packages:
 
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
+
+  /react-swipeable-list@1.9.3:
+    resolution: {integrity: sha512-YinT0+Ww3SNJZaTVBGAN86tNL2cka5s4m8MkQfgp8kdoORuGaPoo+PemFK3kA3mb6vkSZc0IBCp6Ci3y1Er21Q==}
+    dev: false
 
   /react@18.2.0:
     resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}

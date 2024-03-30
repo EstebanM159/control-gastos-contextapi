@@ -8,6 +8,7 @@ export default function ExpenseModal () {
   const { state, dispatch } = useBudget()
   return (
     <>
+    {/* boton para agregar gasto */}
       <div className="fixed right-5 bottom-5 flex items-center justify-center">
         <button
           type="button"
@@ -16,7 +17,7 @@ export default function ExpenseModal () {
           <PlusCircleIcon className='w-16 h-16 text-blue-600 rounded-full' />
         </button>
       </div>
-
+      {/* Componente para deslizar etcetc */}
       <Transition appear show={state.modal} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={() => { dispatch({ type: 'close-modal' }) }}>
           <Transition.Child

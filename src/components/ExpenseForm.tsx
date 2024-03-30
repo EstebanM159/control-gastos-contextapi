@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent } from 'react'
+import { useState, type ChangeEvent, useEffect } from 'react'
 import { categories } from '../data'
 import DatePicker from 'react-date-picker'
 import { type Value, type DraftExpense } from '../types'
@@ -15,7 +15,15 @@ const initialState: DraftExpense = {
 export default function ExpenseForm () {
   const [expense, setExpense] = useState(initialState)
   const [error, setError] = useState('')
-  const { dispatch } = useBudget()
+  const [previousAmount, setPreviousAmount] = useState(0)
+  const { state, dispatch, remainingBudget } = useBudget()
+  useEffect(() => {
+    if (state.editingId) {
+      const expenseEdit = state.expenses.filter(exp => exp.id === state.editingId)[0]
+      setExpense(expenseEdit)
+      setPreviousAmount(expenseEdit.amount)
+    }
+  }, [state.editingId])
   const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target
     const isAmountField = ['amount'].includes(name)
@@ -36,12 +44,23 @@ export default function ExpenseForm () {
       setError('Todos los campos son obligatorios')
       return
     }
-    dispatch({ type: 'add-expense', payload: { expense } })
+    if ((expense.amount - previousAmount) > remainingBudget) {
+      setError('Ese gasto se sale del presupuesto')
+      return
+    }
+    if (state.editingId) {
+      dispatch({ type: 'update-expense', payload: { expense: { id: state.editingId, ...expense } } })
+    } else {
+      dispatch({ type: 'add-expense', payload: { expense } })
+    }
+    setExpense(initialState)
+    setPreviousAmount(0)
   }
+
   return (
     <form className="space-y-5" onSubmit={handleSubmit}>
         <legend className="uppercase text-2xl text-center font-black border-b-4 py-2 border-b-blue-500">
-            Nuevo Gasto
+          {state.editingId ? 'Guardar gasto' : 'Nuevo Gasto'}
         </legend>
         {error && <ErrorMessage>{error}</ErrorMessage>}
         <div className="flex flex-col gap-2">
@@ -106,7 +125,7 @@ export default function ExpenseForm () {
         <input
             type="submit"
             className='bg-blue-600 cursor-pointer w-full p-2 text-white uppercase font-bold rounded-lg mt-4'
-            value='Registrar gasto'
+            value={state.editingId ? 'Guardar Cambios' : 'Registrar Datos'}
         />
     </form>
   )
